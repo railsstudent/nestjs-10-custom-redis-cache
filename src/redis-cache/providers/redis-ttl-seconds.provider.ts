@@ -1,10 +1,10 @@
 import { Provider } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { REDIS_TTL_TOKEN } from '../constants/redis.constant';
-import { RedisConfig } from '../interfaces/redis-config.interface';
+import { RedisCacheModuleOptions } from '../interfaces/redis-cache-options.interface';
+import { MODULE_OPTIONS_TOKEN } from '../interfaces/redis-cache.module-definition';
 
 export const RedisTtlSecondsProvider: Provider<number | undefined> = {
   provide: REDIS_TTL_TOKEN,
-  useFactory: (configService: ConfigService) => configService.get<RedisConfig>('redis').ttl,
-  inject: [ConfigService],
+  useFactory: (options: RedisCacheModuleOptions) => options.ttl,
+  inject: [MODULE_OPTIONS_TOKEN],
 };
