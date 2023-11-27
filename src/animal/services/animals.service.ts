@@ -1,18 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Redis } from 'ioredis';
-import { REDIS_TOKEN, REDIS_TTL_TOKEN } from '../../redis-cache';
+import { env } from '../../configs/env.config';
+import { REDIS_TOKEN } from '../../redis-cache';
 import { AnimalColorDto } from '../dtos/animal-color.dto';
 
 @Injectable()
 export class AnimalsService {
-  constructor(
-    @Inject(REDIS_TOKEN) private readonly redis: Redis,
-    @Inject(REDIS_TTL_TOKEN) private readonly ttlInSeconds?: number,
-  ) {}
+  constructor(@Inject(REDIS_TOKEN) private readonly redis: Redis) {}
 
   async cacheValue({ name, color }: AnimalColorDto): Promise<void> {
-    if (this.ttlInSeconds) {
-      await this.redis.set(name, color, 'EX', this.ttlInSeconds);
+    if (env.REDIS.TTL) {
+      await this.redis.set(name, color, 'EX', env.REDIS.TTL);
     } else {
       await this.redis.set(name, color);
     }

@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AnimalModule } from './animal/animal.module';
 import { AppController } from './app.controller';
-import { GlobalCacheModule } from './configs/cache.config';
+import { globalCacheConfig } from './configs/cache.config';
 
 @Module({
-  imports: [GlobalCacheModule, AnimalModule],
+  imports: [globalCacheConfig, AnimalModule],
   controllers: [AppController],
 })
 export class AppModule {}

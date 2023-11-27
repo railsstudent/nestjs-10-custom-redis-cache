@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigurableModuleClass } from './interfaces/redis-cache.module-definition';
-import { RedisTtlSecondsProvider } from './providers/redis-ttl-seconds.provider';
 import { RedisProvider } from './providers/redis.provider';
 
 @Module({
-  providers: [RedisProvider, RedisTtlSecondsProvider],
-  exports: [RedisProvider, RedisTtlSecondsProvider],
+  providers: [RedisProvider],
+  exports: [RedisProvider],
 })
 export class RedisCacheModule extends ConfigurableModuleClass {}
